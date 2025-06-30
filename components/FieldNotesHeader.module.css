@@ -1,0 +1,99 @@
+/* 紙の質感を強化するカスタムスタイル */
+.paper-texture {
+  position: relative;
+  background-color: var(--paper-color);
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(0, 0, 0, 0.01) 10px,
+      rgba(0, 0, 0, 0.01) 20px
+    ),
+    url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Cfilter id="noise"%3E%3CfeTurbulence baseFrequency="0.9" /%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noise)" opacity="0.02"/%3E%3C/svg%3E');
+}
+
+/* テキストシャドウ */
+.text-shadow {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* クリップのメタリック効果 */
+.clip-metallic {
+  position: relative;
+}
+
+/* しおり紐の立体感 */
+.ribbon-3d {
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* ページめくりアニメーション */
+@keyframes pageTurn {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* カスタムスクロールバー（Firefox対応） */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-faded) var(--paper-color);
+}
+
+/* レスポンシブ対応の追加スタイル */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 60px;
+  }
+  
+  .paper-clip {
+    transform: scale(0.8);
+  }
+}
+
+/* プリント時のスタイル */
+@media print {
+  .field-notes-header {
+    position: static;
+    page-break-after: avoid;
+  }
+  
+  main {
+    padding-top: 0;
+  }
+}
+
+/* インクの滲み効果 */
+@keyframes inkBleed {
+  0% {
+    filter: blur(0px);
+    opacity: 1;
+  }
+  50% {
+    filter: blur(1px);
+    opacity: 0.8;
+  }
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+/* しおり紐の揺れアニメーション */
+@keyframes ribbonSway {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-2deg);
+  }
+  75% {
+    transform: rotate(2deg);
+  }
+}

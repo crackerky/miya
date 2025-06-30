@@ -1,0 +1,1004 @@
+@import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Courier+Prime:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* グローバルスタイル */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+body {
+  color: #2C2C2C;
+  /* 背景画像を設定 - PNGファイルに対応 */
+  background-color: #F4E8D0; /* フォールバック色 */
+  background-image: url('/paper-texture.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  position: relative;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* 画像が読み込まれない場合のフォールバック背景 */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/paper-texture-placeholder.svg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* 背景のオーバーレイ */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(244, 232, 208, 0.3);
+  pointer-events: none;
+  z-index: -1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* スクロールバーのスタイル */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(250, 248, 243, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6B6B6B;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2C2C2C;
+}
+
+/* メインコンテンツのパディング（ヘッダー分） */
+main {
+  padding-top: 80px;
+  min-height: 100vh;
+}
+
+/* セクションの背景（半透明） */
+.content-section {
+  background: rgba(250, 248, 243, 0.85);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* テキストシャドウ */
+.text-shadow {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* フォントスタイル */
+.font-klee {
+  font-family: 'Klee One', 'Noto Sans JP', cursive !important;
+}
+
+.font-courier {
+  font-family: 'Courier Prime', 'Noto Sans JP', monospace !important;
+}
+
+/* クリップのメタリック効果 */
+.clip-metallic {
+  position: relative;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  main {
+    padding-top: 60px;
+  }
+}
+
+/* ==================== ヒーローセクションのスタイル ==================== */
+
+/* ヒーローセクション基本設定 */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px 80px;
+  overflow: hidden;
+}
+
+/* 方眼ノートの背景 */
+.notebook-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+/* グリッド線 */
+.grid-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    /* 縦線 */
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 19px,
+      #E3E8F0 19px,
+      #E3E8F0 20px
+    ),
+    /* 横線 */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 19px,
+      #E3E8F0 19px,
+      #E3E8F0 20px
+    );
+  opacity: 0.5;
+}
+
+/* ノートの穴 */
+.notebook-holes {
+  position: absolute;
+  left: 40px;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+}
+
+.notebook-holes span {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border: 1px solid #DDD;
+  border-radius: 50%;
+  left: 4px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.notebook-holes span:nth-child(1) { top: 100px; }
+.notebook-holes span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.notebook-holes span:nth-child(3) { bottom: 100px; }
+
+/* メインコンテンツ */
+.hero-content {
+  position: relative;
+  max-width: 800px;
+  width: 100%;
+  z-index: 1;
+}
+
+/* 手書きテキスト */
+.handwritten-text {
+  font-family: 'Klee One', 'Noto Sans JP', cursive;
+  font-size: 20px;
+  line-height: 2.2;
+  color: #2C2C2C;
+  padding: 40px 60px;
+}
+
+.text-line {
+  opacity: 0;
+  transform: translateY(10px);
+  margin: 0;
+}
+
+.text-line.visible {
+  animation: writeIn 0.6s ease-out forwards;
+}
+
+@keyframes writeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* テキスト装飾 */
+.highlight-yellow {
+  background: linear-gradient(transparent 60%, #FFE44D 60%);
+  padding: 0 2px;
+  position: relative;
+}
+
+.underline-red {
+  position: relative;
+  text-decoration: none;
+}
+
+.underline-red::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #B83C3C;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: underlineDraw 0.5s ease-out 0.3s forwards;
+}
+
+@keyframes underlineDraw {
+  to { transform: scaleX(1); }
+}
+
+.emphasis {
+  font-weight: 600;
+  font-size: 1.1em;
+  color: #1a1a1a;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.05);
+}
+
+.pen-circle {
+  position: relative;
+  padding: 0 5px;
+}
+
+.pen-circle::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -10px;
+  right: -10px;
+  bottom: -5px;
+  border: 2px solid #B83C3C;
+  border-radius: 50%;
+  transform: rotate(-2deg) scale(0);
+  animation: circleGrow 0.5s ease-out 0.5s forwards;
+}
+
+@keyframes circleGrow {
+  to { transform: rotate(-2deg) scale(1); }
+}
+
+/* コーヒーの染み */
+.coffee-stain {
+  position: absolute;
+  top: 80px;
+  right: 100px;
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.coffee-stain:hover {
+  transform: scale(1.05);
+}
+
+.coffee-stain::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.coffee-stain:hover::after {
+  opacity: 1;
+}
+
+/* 付箋 */
+.sticky-note {
+  position: absolute;
+  width: 120px;
+  padding: 10px;
+  background: #FFFAA0;
+  box-shadow: 
+    0 2px 5px rgba(0,0,0,0.1),
+    inset 0 -1px 2px rgba(0,0,0,0.05);
+  font-family: 'Klee One', cursive;
+  font-size: 14px;
+  cursor: grab;
+  transition: all 0.3s ease;
+}
+
+.sticky-note-1 {
+  top: 150px;
+  right: 50px;
+  transform: rotate(-3deg);
+}
+
+.sticky-note-2 {
+  bottom: 200px;
+  right: 80px;
+  transform: rotate(2deg);
+}
+
+.sticky-note:hover {
+  transform: rotate(0deg) scale(1.1);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+.sticky-note:active {
+  cursor: grabbing;
+}
+
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 20px;
+  background: rgba(200,200,200,0.5);
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+}
+
+/* 署名 */
+.signature-wrapper {
+  position: absolute;
+  bottom: 80px;
+  right: 120px;
+  width: 200px;
+  opacity: 0;
+  animation: fadeInSignature 1s ease-out 7s forwards;
+}
+
+@keyframes fadeInSignature {
+  to { opacity: 1; }
+}
+
+.signature path {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: drawSignature 2s ease-out 7.5s forwards;
+}
+
+@keyframes drawSignature {
+  to { stroke-dashoffset: 0; }
+}
+
+/* 鉛筆の跡 */
+.pencil-mark {
+  position: absolute;
+  background: rgba(108, 108, 108, 0.1);
+  height: 2px;
+  transform: rotate(-45deg);
+}
+
+.pencil-mark-1 {
+  width: 80px;
+  top: 300px;
+  left: 100px;
+}
+
+/* 消しカス */
+.eraser-dust {
+  position: absolute;
+  bottom: 150px;
+  left: 200px;
+  width: 30px;
+  height: 20px;
+  background: radial-gradient(ellipse at center, #DDD 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+/* スクロールインジケーター */
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  cursor: pointer;
+}
+
+.scroll-text {
+  font-family: 'Klee One', cursive;
+  font-size: 14px;
+  color: #6B6B6B;
+  margin-bottom: 5px;
+}
+
+.scroll-arrow {
+  font-size: 20px;
+  color: #6B6B6B;
+}
+
+/* ユーティリティクラス */
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.text-large { font-size: 1.2em; }
+
+/* ヒーローセクションのレスポンシブ */
+@media (max-width: 768px) {
+  .handwritten-text {
+    font-size: 16px;
+    padding: 20px 30px;
+  }
+  
+  .coffee-stain {
+    width: 100px;
+    height: 100px;
+    top: 60px;
+    right: 20px;
+  }
+  
+  .sticky-note {
+    width: 100px;
+    font-size: 12px;
+  }
+  
+  .signature-wrapper {
+    width: 150px;
+    bottom: 60px;
+    right: 40px;
+  }
+}
+
+/* アニメーション設定を尊重 */
+@media (prefers-reduced-motion: reduce) {
+  .text-line {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .underline-red::after,
+  .pen-circle::before,
+  .signature path {
+    animation: none;
+    transform: scale(1);
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ==================== 目次セクションのスタイル ==================== */
+
+/* 目次セクション基本設定 */
+.table-of-contents {
+  position: relative;
+  padding: 100px 20px;
+  min-height: 100vh;
+  background: rgba(250, 248, 243, 0.95);
+  overflow: hidden;
+}
+
+/* ノートの罫線背景 */
+.notebook-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 29px,
+      #E3E8F0 29px,
+      #E3E8F0 30px
+    );
+  opacity: 0.3;
+  z-index: 0;
+}
+
+/* セクションヘッダー */
+.toc-header {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.toc-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  font-family: 'Klee One', cursive;
+  font-size: 36px;
+  color: #2C2C2C;
+  margin: 0;
+}
+
+.title-icon {
+  font-size: 40px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.toc-subtitle {
+  font-family: 'Klee One', cursive;
+  font-size: 18px;
+  color: #6B6B6B;
+  margin: 10px 0 0;
+}
+
+/* インデックスカードコンテナ */
+.index-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* インデックスカード */
+.index-card {
+  position: relative;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.index-card:hover .card-inner {
+  transform: rotateY(5deg);
+}
+
+.index-card.flipping .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* カード前面 */
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card-front {
+  background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
+  border: 1px solid #E0E0E0;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* カード背面 */
+.card-back {
+  background: #E8E8E8;
+  transform: rotateY(180deg);
+}
+
+.card-back-texture {
+  width: 100%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(0, 0, 0, 0.03) 10px,
+      rgba(0, 0, 0, 0.03) 20px
+    );
+}
+
+/* カードヘッダー */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.chapter-number {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6B6B6B;
+  margin: 0;
+}
+
+.bookmark-flag {
+  width: 30px;
+  height: 40px;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+  opacity: 0.8;
+}
+
+/* 章タイトル */
+.chapter-title {
+  font-family: 'Klee One', cursive;
+  font-size: 22px;
+  font-weight: 600;
+  color: #2C2C2C;
+  margin: 0 0 20px;
+  line-height: 1.3;
+}
+
+/* プレビューエリア */
+.card-preview {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* 画像プレビュー */
+.image-preview {
+  width: 100%;
+  max-width: 220px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.preview-image {
+  transition: transform 0.3s ease;
+}
+
+.index-card:hover .preview-image {
+  transform: scale(1.05);
+}
+
+/* ポラロイド風プレビュー */
+.polaroid-preview {
+  transform: rotate(-2deg);
+}
+
+.polaroid-frame {
+  background: white;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.polaroid-image {
+  width: 120px;
+  height: 120px;
+  background: #F0F0F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.polaroid-caption {
+  text-align: center;
+  font-family: 'Klee One', cursive;
+  font-size: 12px;
+  color: #6B6B6B;
+  margin-top: 5px;
+}
+
+/* 地図プレビュー */
+.map-preview {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+}
+
+/* カウンター表示 */
+.species-counter,
+.ruins-counter,
+.mystery-counter {
+  text-align: center;
+}
+
+.counter-display {
+  font-family: 'Courier Prime', monospace;
+  font-size: 32px;
+  font-weight: bold;
+  color: #2C2C2C;
+  margin-bottom: 10px;
+}
+
+.counter-current {
+  color: #B83C3C;
+}
+
+.counter-separator {
+  color: #6B6B6B;
+  margin: 0 5px;
+}
+
+.species-icons,
+.ruins-map {
+  font-size: 20px;
+  letter-spacing: 5px;
+}
+
+.mystery-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+.arrow {
+  color: #6B6B6B;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* メタ情報 */
+.card-meta {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px dashed #DDD;
+  position: relative;
+}
+
+.page-range {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 14px;
+  color: #6B6B6B;
+  margin-bottom: 10px;
+}
+
+/* プログレスバー */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: #E0E0E0;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ECDC4 0%, #44A3AA 100%);
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-20px); }
+  100% { transform: translateX(20px); }
+}
+
+.progress-text {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 12px;
+  color: #6B6B6B;
+  text-align: right;
+}
+
+/* 完了バッジ */
+.completion-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #4ECDC4;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* ツールチップ */
+.card-tooltip {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+  z-index: 10;
+}
+
+.tooltip-content {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 10px;
+}
+
+.tooltip-stats {
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* 手書きメモ */
+.handwritten-memo {
+  position: absolute;
+  bottom: -30px;
+  right: 10px;
+  font-family: 'Klee One', cursive;
+  font-size: 14px;
+  color: #B83C3C;
+  transform: rotate(-5deg);
+  white-space: nowrap;
+}
+
+/* しおり紐 */
+.ribbon-bookmark {
+  position: absolute;
+  top: 100px;
+  right: 50px;
+  z-index: 2;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+  animation: sway 4s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+/* 音声インジケーター */
+.sound-indicator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.sound-indicator:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
+}
+
+/* 最終章の特別演出 */
+.card-final {
+  position: relative;
+}
+
+.card-final::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: radial-gradient(circle at center, transparent 0%, rgba(184, 60, 60, 0.1) 100%);
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-final:hover::before {
+  opacity: 1;
+  animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+/* 目次セクションのレスポンシブ */
+@media (max-width: 768px) {
+  .index-cards-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .card-inner {
+    height: 320px;
+  }
+  
+  .chapter-title {
+    font-size: 20px;
+  }
+  
+  .ribbon-bookmark {
+    display: none;
+  }
+  
+  .sound-indicator {
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}
+
+/* 目次アクセシビリティ: モーション無効化 */
+@media (prefers-reduced-motion: reduce) {
+  .card-inner,
+  .progress-fill::after,
+  .arrow,
+  .title-icon,
+  .ribbon-bookmark {
+    animation: none;
+  }
+  
+  .index-card:hover .card-inner {
+    transform: none;
+  }
+}
