@@ -179,7 +179,7 @@ export default function TableOfContents() {
         })
         
         // URLハッシュを更新
-        history.pushState(null, null, `#chapter-${chapterId}`)
+        history.pushState(null, '', `#chapter-${chapterId}`)
       }
     }, 600)
     
